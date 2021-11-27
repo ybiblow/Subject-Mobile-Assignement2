@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Subject_Mobile_Assignment_2</string>
     <string name="fast_mode">fast_mode</string>
-    <string name="leadboard">leadboard</string>
-    <string name="normal_mode">normal_mode</string>
+    <string name="Leaderboard">leaderboard</string>
+    <string name="Play">Play</string>
     <string name="sensor_mode">sensor_mode</string>
 </resources>
