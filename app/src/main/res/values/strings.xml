@@ -4,4 +4,6 @@
     <string name="Leaderboard">leaderboard</string>
     <string name="Play">Play</string>
     <string name="sensor_mode">sensor_mode</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

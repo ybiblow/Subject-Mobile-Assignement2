@@ -18,6 +18,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textViewCoins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:text="Coins: 0$"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toEndOf="@id/textViewDistance"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -446,6 +457,391 @@
             app:srcCompat="@drawable/stone" />
 
         <ImageView
+            android:id="@+id/imageViewCoin0"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="0"
+            app:layout_columnWeight="1"
+            app:layout_row="0"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin1"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_row="0"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin2"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="2"
+            app:layout_columnWeight="1"
+            app:layout_row="0"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin3"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="3"
+            app:layout_columnWeight="1"
+            app:layout_row="0"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin4"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="4"
+            app:layout_columnWeight="1"
+            app:layout_row="0"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin5"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="0"
+            app:layout_columnWeight="1"
+            app:layout_row="1"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin6"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_row="1"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin7"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="2"
+            app:layout_columnWeight="1"
+            app:layout_row="1"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin8"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="3"
+            app:layout_columnWeight="1"
+            app:layout_row="1"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin9"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="4"
+            app:layout_columnWeight="1"
+            app:layout_row="1"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin10"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="0"
+            app:layout_columnWeight="1"
+            app:layout_row="2"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin11"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_row="2"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin12"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="2"
+            app:layout_columnWeight="1"
+            app:layout_row="2"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin13"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="3"
+            app:layout_columnWeight="1"
+            app:layout_row="2"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin14"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="4"
+            app:layout_columnWeight="1"
+            app:layout_row="2"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin15"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="0"
+            app:layout_columnWeight="1"
+            app:layout_row="3"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin16"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_row="3"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin17"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="2"
+            app:layout_columnWeight="1"
+            app:layout_row="3"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin18"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="3"
+            app:layout_columnWeight="1"
+            app:layout_row="3"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin19"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="4"
+            app:layout_columnWeight="1"
+            app:layout_row="3"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin20"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="0"
+            app:layout_columnWeight="1"
+            app:layout_row="4"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin21"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_row="4"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin22"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="2"
+            app:layout_columnWeight="1"
+            app:layout_row="4"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin23"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="3"
+            app:layout_columnWeight="1"
+            app:layout_row="4"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin24"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="4"
+            app:layout_columnWeight="1"
+            app:layout_row="4"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin25"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="0"
+            app:layout_columnWeight="1"
+            app:layout_row="5"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin26"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_row="5"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin27"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="2"
+            app:layout_columnWeight="1"
+            app:layout_row="5"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin28"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="3"
+            app:layout_columnWeight="1"
+            app:layout_row="5"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin29"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="4"
+            app:layout_columnWeight="1"
+            app:layout_row="5"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin30"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="0"
+            app:layout_columnWeight="1"
+            app:layout_row="6"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin31"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_row="6"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin32"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="2"
+            app:layout_columnWeight="1"
+            app:layout_row="6"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin33"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="3"
+            app:layout_columnWeight="1"
+            app:layout_row="6"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
+            android:id="@+id/imageViewCoin34"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:visibility="invisible"
+            app:layout_column="4"
+            app:layout_columnWeight="1"
+            app:layout_row="6"
+            app:layout_rowWeight="1"
+            app:srcCompat="@drawable/gold_coin" />
+
+        <ImageView
             android:id="@+id/imageViewSpaceship0"
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -474,6 +870,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:tag="32"
+            android:visibility="visible"
             app:layout_column="2"
             app:layout_columnWeight="1"
             app:layout_row="6"
@@ -510,6 +907,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -519,7 +917,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="moveSpaceship"
+            android:onClick="moveSpaceshipArrowClick"
             android:tag="0"
             app:srcCompat="@drawable/arrow_left" />
 
@@ -528,7 +926,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="moveSpaceship"
+            android:onClick="moveSpaceshipArrowClick"
             android:tag="1"
             app:srcCompat="@drawable/arrow_right" />
     </LinearLayout>
