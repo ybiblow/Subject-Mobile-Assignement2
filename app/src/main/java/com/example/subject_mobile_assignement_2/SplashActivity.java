@@ -19,13 +19,9 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         imageViewSplashLogo = findViewById(R.id.imageViewSplashLogo);
-        //imageViewSplashLogo.setVisibility(View.INVISIBLE);
-
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        //int width = displayMetrics.widthPixels;
         int height = displayMetrics.heightPixels;
-        //imageViewSplashLogo.setX(-width/2);
         imageViewSplashLogo.setY(height / 2);
         imageViewSplashLogo.setScaleX(1.0f);
         imageViewSplashLogo.setScaleY(1.0f);

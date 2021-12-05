@@ -30,7 +30,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.mapsFrame, mapsFragment).commit();
         listFragment.setActivity(this);
         listFragment.setCallbackList(callbackList);
-        //mapsFragment.changeMap();
     }
 
     @Override

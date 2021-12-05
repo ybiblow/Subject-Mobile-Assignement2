@@ -40,8 +40,8 @@ public class ListFragment extends Fragment {
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, stringArrayList);
-
         listViewLeaderboardCoins.setAdapter(arrayAdapter);
+
 
         listViewLeaderboardCoins.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

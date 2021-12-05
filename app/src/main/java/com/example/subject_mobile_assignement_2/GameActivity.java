@@ -16,6 +16,7 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,8 +36,11 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity {
 
     private LinearLayout linearLayoutArrows;
+    float x;
+    float y;
+    float z;
     private int sensorEnabled = 0;
-    private int numOfHearts;
+    private int numOfHearts = 3;
     private int randomNumber1;
     private int randomNumber2;
     private int distance = 0;
@@ -46,8 +50,10 @@ public class GameActivity extends AppCompatActivity {
     private double longitude = 0;
     private double latitude = 0;
     private Vibrator v;
-    private Handler handler;
-    private Runnable runnable;
+    private Handler handler1;
+    private Runnable runnable1;
+    private Handler handler2;
+    private Runnable runnable2;
     private LocationManager lm;
     private TextView textViewCoins;
     private TextView textViewDistance;
@@ -59,30 +65,16 @@ public class GameActivity extends AppCompatActivity {
     private Random random = new Random();
     private SensorManager sensorManager;
     private Sensor sensor;
-    private int lock = 0;
-    private float oldX = 0;
+    private MediaPlayer coinSoundMediaPlayer;
+    private MediaPlayer crashSoundMediaPlayer;
+    private MediaPlayer losingSoundMediaPlayer;
     private SensorEventListener sensorEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
-            // Move spaceship according to accelerometer
-            if (lock == 0) {
-                float x = event.values[0];
-                float y = event.values[1];
-                float z = event.values[2];
-                boolean ok = oldX < 0.4 && oldX > -0.4;
-                if (x > 1.5 && ok) {
-                    lock = 1;
-                    moveSpaceship(0);
-                }
-                if (x < -1.5 && ok) {
-                    lock = 1;
-                    moveSpaceship(1);
-                }
-                Log.i("info", "___________Accelerometer changed, new values are: (" + x + "," + y + "," + z + ")");
-                lock = 0;
-            }
+            x = event.values[0];
+            y = event.values[1];
+            z = event.values[2];
         }
-
 
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -95,12 +87,85 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        textViewDistance = findViewById(R.id.textViewDistance);
-        textViewCoins = findViewById(R.id.textViewCoins);
+        findViews();
+        addViewsToArrayLists();
+        initLocation();
+        checkSensorEnabled();
+        init_Handlers_Runnables();
+    }
 
-        linearLayoutArrows = findViewById(R.id.linearLayoutArrows);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sensorEnabled == 1)
+            sensorManager.registerListener(sensorEventListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (sensorEnabled == 1)
+            sensorManager.unregisterListener(sensorEventListener);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        stopHandler = 1;
+        handler1.removeCallbacks(runnable1);
+        if (sensorEnabled == 1)
+            handler2.removeCallbacks(runnable1);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Record record = new Record(distance, numOfCoinsGathered, latitude, longitude);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("RECORD", (Serializable) record);
+        intent.putExtra("BUNDLE", bundle);
+        lm.removeUpdates(locationListener);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1, locationListener);
+            }
+        }
+
+    }
+
+    private void checkSensorEnabled() {
+        Intent intent = getIntent();
+        sensorEnabled = intent.getIntExtra("SENSOR_ENABLED", 0);
+        if (sensorEnabled == 1) {
+            sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+            sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            linearLayoutArrows.setVisibility(View.INVISIBLE);
+            Log.i("info", "Sensor Enabled: " + sensorEnabled);
+        }
+    }
+
+    private void initLocation() {
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+            }
+        };
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        } else {
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1, locationListener);
+        }
+    }
+
+    private void addViewsToArrayLists() {
         coins = new ArrayList<ImageView>();
         stones = new ArrayList<ImageView>();
         // add stones to arraylist
@@ -121,87 +186,57 @@ public class GameActivity extends AppCompatActivity {
         for (int i = 0; i < 3; i++) {
             imageViewHearts.add(findViewById(getResources().getIdentifier("imageViewHeart" + i, "id", getPackageName())));
         }
+    }
 
-        numOfHearts = 3;
+    private void findViews() {
+        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        textViewDistance = findViewById(R.id.textViewDistance);
+        textViewCoins = findViewById(R.id.textViewCoins);
+        linearLayoutArrows = findViewById(R.id.linearLayoutArrows);
+        coinSoundMediaPlayer = MediaPlayer.create(this, R.raw.coin_sound);
+        crashSoundMediaPlayer = MediaPlayer.create(this, R.raw.crash_sound);
+        losingSoundMediaPlayer = MediaPlayer.create(this, R.raw.losing_sound);
+    }
 
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
-            }
-        };
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        } else {
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1, locationListener);
-        }
-
-        Intent intent = getIntent();
-        sensorEnabled = intent.getIntExtra("SENSOR_ENABLED", 0);
-        if (sensorEnabled == 1) {
-            sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-            sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-            linearLayoutArrows.setVisibility(View.INVISIBLE);
-            Log.i("info", "Sensor Enabled: " + sensorEnabled);
-        }
-
-        handler = new Handler();
-        runnable = new Runnable() {
+    private void init_Handlers_Runnables() {
+        handler1 = new Handler();
+        runnable1 = new Runnable() {
             @Override
             public void run() {
                 dropObjects();
                 if (stopHandler == 0) {
-                    handler.postDelayed(this, 1000);
+                    handler1.postDelayed(this, 1000);
                 } else {
-                    handler.removeCallbacks(runnable);
+                    handler1.removeCallbacks(runnable1);
                 }
             }
         };
-        handler.post(runnable);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1, locationListener);
-            }
+        handler1.post(runnable1);
+        if (sensorEnabled == 1) {
+            handler2 = new Handler();
+            runnable2 = new Runnable() {
+                @Override
+                public void run() {
+                    // Code
+                    float currentX = x;
+                    // boolean ok = oldX < 0.4 && oldX > -0.4;
+                    if (currentX > 1.5) {
+                        //lock = 1;
+                        moveSpaceship(0);
+                    }
+                    if (currentX < -1.5) {
+                        //lock = 1;
+                        moveSpaceship(1);
+                    }
+                    Log.i("info", "___________Accelerometer changed, new values are: (" + x + "," + y + "," + z + ")");
+                    handler1.postDelayed(this, 300);
+                    if (stopHandler != 0) {
+                        handler1.removeCallbacks(runnable2);
+                    }
+                }
+            };
+            handler2.post(runnable2);
         }
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (sensorEnabled == 1)
-            sensorManager.registerListener(sensorEventListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (sensorEnabled == 1)
-            sensorManager.unregisterListener(sensorEventListener);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        handler.removeCallbacks(runnable);
-        stopHandler = 1;
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        Record record = new Record(distance, numOfCoinsGathered, latitude, longitude);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("RECORD", (Serializable) record);
-        intent.putExtra("BUNDLE", bundle);
-        lm.removeUpdates(locationListener);
-        startActivity(intent);
-        finish();
     }
 
     private void dropObjects() {
@@ -257,15 +292,8 @@ public class GameActivity extends AppCompatActivity {
             Log.i("info", "You collected a coin!");
             increaseCoins();
             coins.get(spaceshipTag).setVisibility(View.INVISIBLE);
+            coinSoundMediaPlayer.start();
         }
-    }
-
-    private void increaseDistance() {
-        distance++;
-        String string = textViewDistance.getText().toString();
-        String splitString[] = new String[2];
-        splitString = string.split(": ");
-        textViewDistance.setText("Distance" + ": " + distance + "m");
     }
 
     private void checkCrash() {
@@ -273,18 +301,9 @@ public class GameActivity extends AppCompatActivity {
         if (stones.get(spaceshipTag).getVisibility() == View.VISIBLE) {
             Log.i("info", "You have been hit!");
             Toast.makeText(getApplicationContext(), "You have been hit!", Toast.LENGTH_SHORT).show();
+            crashSoundMediaPlayer.start();
             vibrate();
             reduceHeart();
-        }
-    }
-
-    private void vibrate() {
-        // Vibrate for 500 milliseconds
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-        } else {
-            //deprecated in API 26
-            v.vibrate(500);
         }
     }
 
@@ -299,10 +318,27 @@ public class GameActivity extends AppCompatActivity {
             }
         } else {
             for (ImageView heart : imageViewHearts) {
-                /*heart.setVisibility(View.VISIBLE);
-                numOfHearts = 3;*/
+                losingSoundMediaPlayer.start();
                 onBackPressed();
             }
+        }
+    }
+
+    private void increaseDistance() {
+        distance++;
+        String string = textViewDistance.getText().toString();
+        String splitString[] = new String[2];
+        splitString = string.split(": ");
+        textViewDistance.setText("Distance" + ": " + distance + "m");
+    }
+
+    private void vibrate() {
+        // Vibrate for 500 milliseconds
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            //deprecated in API 26
+            v.vibrate(500);
         }
     }
 
@@ -316,23 +352,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void moveSpaceshipArrowClick(View view) {
         int direction = Integer.parseInt(view.getTag().toString());
-        int spaceshipTag = getVisibleSpaceshipTag();
-
-        if (direction == 0) {
-            //move left
-            if (spaceshipTag % 5 != 0) {
-                imageViewSpaceships.get(spaceshipTag % 5).setVisibility(View.INVISIBLE);
-                imageViewSpaceships.get(spaceshipTag % 5 - 1).setVisibility(View.VISIBLE);
-            }
-        } else {
-            //move right
-            if (spaceshipTag % 5 != 4) {
-                imageViewSpaceships.get(spaceshipTag % 5).setVisibility(View.INVISIBLE);
-                imageViewSpaceships.get(spaceshipTag % 5 + 1).setVisibility(View.VISIBLE);
-            }
-        }
-        checkCrash();
-        checkCoin();
+        moveSpaceship(direction);
     }
 
     public void moveSpaceship(int lor) {
