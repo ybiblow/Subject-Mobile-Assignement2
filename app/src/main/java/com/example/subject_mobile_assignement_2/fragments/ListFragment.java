@@ -1,4 +1,4 @@
-package com.example.subject_mobile_assignement_2;
+package com.example.subject_mobile_assignement_2.fragments;
 
 import android.os.Bundle;
 
@@ -11,6 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.example.subject_mobile_assignement_2.Callback_List;
+import com.example.subject_mobile_assignement_2.Leaderboard;
+import com.example.subject_mobile_assignement_2.R;
+import com.example.subject_mobile_assignement_2.Record;
 
 import java.util.ArrayList;
 
@@ -36,7 +41,7 @@ public class ListFragment extends Fragment {
         ArrayList<String> stringArrayList = new ArrayList<String>();
 
         for (Record record : Leaderboard.getInstance().getRecordsArray()) {
-            stringArrayList.add("Coins: " + record.getCoins());
+            stringArrayList.add("Name: " + record.getName() + ", Coins: " + record.getCoins());
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, stringArrayList);

@@ -26,20 +26,33 @@ public class Leaderboard extends Application {
     }
 
     public void addRecordToRecordsArray(Context context, Record record) {
+
+        boolean addRecord = isRecordAddedToLeaderboard(record);
         if (recordsArray.size() < 10) {
             recordsArray.add(record);
+            recordsArray.sort(new CoinsSorter());
+            saveRecordsArrayToSharedPreferences(context);
+        } else if (addRecord) {
+            recordsArray.remove(recordsArray.size() - 1);
+            recordsArray.add(record);
+            //sort Array
+            recordsArray.sort(new CoinsSorter());
+            saveRecordsArrayToSharedPreferences(context);
+        }
+
+    }
+
+    public boolean isRecordAddedToLeaderboard(Record record) {
+        if (recordsArray.size() < 10) {
+            return true;
         } else {
             for (Record recordInArray : recordsArray) {
                 if (record.getCoins() > recordInArray.getCoins()) {
-                    recordsArray.remove(recordsArray.size() - 1);
-                    recordsArray.add(record);
-                    break;
+                    return true;
                 }
             }
         }
-        //sort Array
-        recordsArray.sort(new CoinsSorter());
-        saveRecordsArrayToSharedPreferences(context);
+        return false;
     }
 
     private void saveRecordsArrayToSharedPreferences(Context context) {

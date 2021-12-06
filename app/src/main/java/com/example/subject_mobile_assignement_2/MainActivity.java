@@ -22,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private MaterialButton button_Play;
     private MaterialButton button_Leaderboard;
     private SwitchMaterial switch_Sensor;
-    private ArrayList<Integer> leaderboardScores;
-    private SharedPreferences sharedPreferences;
     private int sensorEnabled = 0;
 
     @Override
@@ -31,11 +29,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button_Play = findViewById(R.id.button_Play);
-        button_Leaderboard = findViewById(R.id.button_Leaderboard);
-        switch_Sensor = findViewById(R.id.switch_Sensor);
-        leaderboardScores = new ArrayList<Integer>();
+        findViews();
+        setOnClickListeners();
+        loadRecords();
+        //getValuesFromActivities();
+    }
 
+    private void getValuesFromActivities() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("BUNDLE");
+        if (bundle != null) {
+            //add record
+            Record record = (Record) bundle.getSerializable("RECORD");
+            Leaderboard.getInstance().addRecordToRecordsArray(getApplicationContext(), record);
+        }
+    }
+
+    private void loadRecords() {
+        if (Leaderboard.getInstance().getRecordsArray() == null) {
+            Leaderboard.getInstance().loadRecordsArrayFromSharedPreferences(getApplicationContext());
+        }
+    }
+
+    private void setOnClickListeners() {
         button_Play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,19 +92,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-        if (Leaderboard.getInstance().getRecordsArray() == null) {
-            Leaderboard.getInstance().loadRecordsArrayFromSharedPreferences(getApplicationContext());
-        }
-
-        Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("BUNDLE");
-        if (bundle != null) {
-            //add record
-            Record record = (Record) bundle.getSerializable("RECORD");
-            Leaderboard.getInstance().addRecordToRecordsArray(getApplicationContext(), record);
-        }
-        Log.i("info", "" + Leaderboard.getInstance().getRecordsArray().toString());
+    private void findViews() {
+        button_Play = findViewById(R.id.button_Play);
+        button_Leaderboard = findViewById(R.id.button_Leaderboard);
+        switch_Sensor = findViewById(R.id.switch_Sensor);
     }
 
 }

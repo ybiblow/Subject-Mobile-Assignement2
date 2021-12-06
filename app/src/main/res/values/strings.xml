@@ -6,4 +6,7 @@
     <string name="sensor_mode">sensor_mode</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="congratulations_you_entered_the_Top_10">congratulations you\'ve entered the top 10</string>
+    <string name="please_enter_your_name">Please Enter Your Name</string>
+    <string name="submit">Submit</string>
 </resources>

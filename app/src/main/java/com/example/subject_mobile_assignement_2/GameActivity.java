@@ -1,11 +1,13 @@
 package com.example.subject_mobile_assignement_2;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,6 +26,8 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,6 +43,7 @@ public class GameActivity extends AppCompatActivity {
     float x;
     float y;
     float z;
+    private String name = "";
     private int sensorEnabled = 0;
     private int numOfHearts = 3;
     private int randomNumber1;
@@ -68,6 +73,10 @@ public class GameActivity extends AppCompatActivity {
     private MediaPlayer coinSoundMediaPlayer;
     private MediaPlayer crashSoundMediaPlayer;
     private MediaPlayer losingSoundMediaPlayer;
+    private Dialog dialogPopup;
+    private Button buttonSubmit;
+    private EditText editTextGetName;
+
     private SensorEventListener sensorEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
@@ -110,19 +119,70 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
+        stopGame();
+        //Record record = new Record(distance, numOfCoinsGathered, latitude, longitude, name);
+        boolean isRecordInTopTen = isRecordInTopTen();
+        if (isRecordInTopTen) {
+            createPopup();
+        } else {
+            super.onBackPressed();
+            exit();
+
+        }
+
+
+        /*Bundle bundle = new Bundle();
+        bundle.putSerializable("RECORD", (Serializable) record);
+        intent.putExtra("BUNDLE", bundle);*/
+
+        //check that Leaderboard exists and check if the new record should be added to leaderboard array if so, add name to record.
+    }
+
+    private void exit() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private boolean isRecordInTopTen() {
+        Record record = new Record(distance, numOfCoinsGathered, latitude, longitude, name);
+        if (Leaderboard.getInstance().getRecordsArray() != null) {
+            if (Leaderboard.getInstance().isRecordAddedToLeaderboard(record)) {
+                return true;
+//                Leaderboard.getInstance().addRecordToRecordsArray(getApplicationContext(), record);
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private void stopGame() {
         stopHandler = 1;
         handler1.removeCallbacks(runnable1);
         if (sensorEnabled == 1)
             handler2.removeCallbacks(runnable1);
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        Record record = new Record(distance, numOfCoinsGathered, latitude, longitude);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("RECORD", (Serializable) record);
-        intent.putExtra("BUNDLE", bundle);
         lm.removeUpdates(locationListener);
-        startActivity(intent);
-        finish();
+    }
+
+    public void createPopup() {
+        AppCompatActivity activity = this;
+        dialogPopup = new Dialog(this);
+        dialogPopup.setContentView(R.layout.get_name_popup);
+        dialogPopup.show();
+        editTextGetName = dialogPopup.findViewById(R.id.editTextGetName);
+        buttonSubmit = dialogPopup.findViewById(R.id.buttonSubmit);
+        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                name = editTextGetName.getText().toString();
+                Record record = new Record(distance, numOfCoinsGathered, latitude, longitude, name);
+                Leaderboard.getInstance().addRecordToRecordsArray(activity, record);
+                dialogPopup.dismiss();
+                exit();
+            }
+        });
     }
 
     @Override

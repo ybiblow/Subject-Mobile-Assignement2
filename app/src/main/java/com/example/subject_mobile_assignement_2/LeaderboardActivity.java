@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
+import com.example.subject_mobile_assignement_2.fragments.ListFragment;
+import com.example.subject_mobile_assignement_2.fragments.MapsFragment;
 
 import java.util.ArrayList;
 
