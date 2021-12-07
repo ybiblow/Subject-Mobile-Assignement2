@@ -162,7 +162,7 @@ public class GameActivity extends AppCompatActivity {
         stopHandler = 1;
         handler1.removeCallbacks(runnable1);
         if (sensorEnabled == 1)
-            handler2.removeCallbacks(runnable1);
+            handler2.removeCallbacks(runnable2);
         lm.removeUpdates(locationListener);
     }
 
