@@ -1,10 +1,9 @@
-package com.example.subject_mobile_assignement_2;
+package com.example.subject_mobile_assignement_2.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -12,10 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.subject_mobile_assignement_2.Model.Leaderboard;
+import com.example.subject_mobile_assignement_2.R;
+import com.example.subject_mobile_assignement_2.Model.Record;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 

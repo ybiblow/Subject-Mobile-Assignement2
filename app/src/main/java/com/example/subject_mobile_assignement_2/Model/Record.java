@@ -1,4 +1,4 @@
-package com.example.subject_mobile_assignement_2;
+package com.example.subject_mobile_assignement_2.Model;
 
 import java.io.Serializable;
 

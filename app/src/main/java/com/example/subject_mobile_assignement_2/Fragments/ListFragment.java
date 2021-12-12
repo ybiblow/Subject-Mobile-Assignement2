@@ -1,4 +1,4 @@
-package com.example.subject_mobile_assignement_2.fragments;
+package com.example.subject_mobile_assignement_2.Fragments;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.subject_mobile_assignement_2.Callback_List;
-import com.example.subject_mobile_assignement_2.Leaderboard;
+import com.example.subject_mobile_assignement_2.Activities.Callback_List;
+import com.example.subject_mobile_assignement_2.Model.Leaderboard;
 import com.example.subject_mobile_assignement_2.R;
-import com.example.subject_mobile_assignement_2.Record;
+import com.example.subject_mobile_assignement_2.Model.Record;
 
 import java.util.ArrayList;
 

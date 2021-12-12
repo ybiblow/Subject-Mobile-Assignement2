@@ -1,4 +1,4 @@
-package com.example.subject_mobile_assignement_2;
+package com.example.subject_mobile_assignement_2.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,9 +6,11 @@ import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
+
+import com.example.subject_mobile_assignement_2.Activities.MainActivity;
+import com.example.subject_mobile_assignement_2.R;
 
 public class SplashActivity extends AppCompatActivity {
     private ImageView imageViewSplashLogo;

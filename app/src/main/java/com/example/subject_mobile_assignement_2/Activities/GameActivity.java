@@ -1,7 +1,6 @@
-package com.example.subject_mobile_assignement_2;
+package com.example.subject_mobile_assignement_2.Activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -33,7 +32,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.Serializable;
+import com.example.subject_mobile_assignement_2.Model.Leaderboard;
+import com.example.subject_mobile_assignement_2.R;
+import com.example.subject_mobile_assignement_2.Model.Record;
+
 import java.util.ArrayList;
 import java.util.Random;
 

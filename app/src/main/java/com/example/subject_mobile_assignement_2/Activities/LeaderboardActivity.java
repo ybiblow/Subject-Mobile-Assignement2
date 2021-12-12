@@ -1,12 +1,13 @@
-package com.example.subject_mobile_assignement_2;
+package com.example.subject_mobile_assignement_2.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.subject_mobile_assignement_2.fragments.ListFragment;
-import com.example.subject_mobile_assignement_2.fragments.MapsFragment;
+import com.example.subject_mobile_assignement_2.R;
+import com.example.subject_mobile_assignement_2.Fragments.ListFragment;
+import com.example.subject_mobile_assignement_2.Fragments.MapsFragment;
 
 import java.util.ArrayList;
 

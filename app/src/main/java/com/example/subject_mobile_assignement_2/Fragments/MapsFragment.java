@@ -1,4 +1,4 @@
-package com.example.subject_mobile_assignement_2.fragments;
+package com.example.subject_mobile_assignement_2.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.subject_mobile_assignement_2.Callback_List;
+import com.example.subject_mobile_assignement_2.Activities.Callback_List;
 import com.example.subject_mobile_assignement_2.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
