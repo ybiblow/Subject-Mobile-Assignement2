@@ -6,5 +6,5 @@ dependencyResolutionManagement {
         jcenter() // Warning: this repository is going to shut down soon
     }
 }
-rootProject.name = "Subject_Mobile_Assignement_2"
+rootProject.name = "Subject_Mobile_Assignment_2"
 include ':app'
